@@ -8,7 +8,18 @@
 
 }
 
+.admin_header form {
+    display: flex;
+   flex-direction: column;
+}
+
+.admin_header form button {
+    margin-top: 10px;
+}
 .search_input {
     width: 600px;
 }
 
+.table_container {
+    display: flex;
+}
