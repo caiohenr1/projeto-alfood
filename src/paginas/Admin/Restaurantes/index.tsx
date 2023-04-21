@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import IRestaurante from '../../../interfaces/IRestaurante'
 
 const AdminRestaurante = () => {
-    
+    const params = useParams()
     const [restaurantList, setRestaurantList] = useState<IRestaurante[]>([])
+
     useEffect(() => {
         axios.get('http://localhost:8000/api/v2/restaurantes/')
             .then(response => {
@@ -18,6 +19,15 @@ const AdminRestaurante = () => {
                 alert('Erro na promisse')
             })
     }, [])
+    
+    const handleDelete = ( deleteRestaurant: IRestaurante) => {
+        axios.delete(`http://localhost:8000/api/v2/restaurantes/${deleteRestaurant.id}/`)
+        .then( () => {
+            const newRestaurantList = restaurantList.filter(restaurant => restaurant.id !== deleteRestaurant.id)
+            setRestaurantList([...newRestaurantList])
+        })
+        
+    }
 
     return (
         <div>
@@ -49,8 +59,12 @@ const AdminRestaurante = () => {
                                     [ <Link to={`/admin/restaurantes/${restaurant.id}`}>EDITAR</Link> ]
                                 </TableCell>
                                 <TableCell>
-                                    <Button variant='outlined' color='error'>
-                                        DELETE
+                                    <Button 
+                                        variant='outlined'
+                                        color='error'
+                                        onClick={() => handleDelete(restaurant)}
+                                    >
+                                             DELETE
                                     </Button>
                                 </TableCell>
                             </TableRow>
