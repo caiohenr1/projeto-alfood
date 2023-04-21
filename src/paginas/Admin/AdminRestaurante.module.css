@@ -1,0 +1,14 @@
+.admin_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px;
+    /* border-bottom: 1px solid rgb(160, 160, 160); */
+    margin-bottom: 32px;
+
+}
+
+.search_input {
+    width: 600px;
+}
+
